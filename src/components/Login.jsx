@@ -8,6 +8,7 @@ const SCOPES = [
   'user-read-birthdate',
   'user-read-private',
   'user-modify-playback-state',
+  'user-read-email'
 ];
 
 class Login extends Component {
