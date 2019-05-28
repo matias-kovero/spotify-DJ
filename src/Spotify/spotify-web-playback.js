@@ -45,7 +45,6 @@ class WebPlaybackWaitingForDevice extends Component {
 
     if (this.props.playerAutoConnect) {
       instance.connect();
-      console.log('böö');
     }
   }
 

@@ -10,7 +10,6 @@ import {
 } from './Spotify/spotify-web-playback.js';
 import Carousel from './components/Carousel';
 import Login from './components/Login';
-import SelectDevice from './components/SelectDevice';
 const Cookie = new Cookies();
 
 class App extends Component {
