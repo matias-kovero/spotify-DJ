@@ -17,7 +17,7 @@ html, body {
   height: 80px;
 }
 .album-cover {
-  padding: 1rem 1rem 0rem 2rem;
+  padding: 1rem 0rem 0rem 2rem;
 }
 .w-100, .d-block {
   border-radius: 6%;
@@ -32,7 +32,16 @@ html, body {
 .song-info a{
   color: #FFF;
 }
-
+.left-bar, right-bar {
+  overflow: hidden;
+}
+.volume {
+  width: 50%;
+}
+.volume-icon {
+  font-size: 1.3rem;
+  padding: .4rem;
+}
 .song-info a:hover {
   color: #FFF !important;
 }
@@ -141,7 +150,7 @@ html, body {
 .rangeslider-horizontal {
   height: 5px;
   border-radius: 5px;
-  width: 75%;
+  width: 50%;
 }
 .rangeslider-horizontal .rangeslider__fill {
   height: 100%;

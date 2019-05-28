@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SelectDevice from '../components/SelectDevice';
 
 // Placeholder
 window.onSpotifyWebPlaybackSDKReady = () => {};
@@ -44,6 +45,7 @@ class WebPlaybackWaitingForDevice extends Component {
 
     if (this.props.playerAutoConnect) {
       instance.connect();
+      console.log('böö');
     }
   }
 
@@ -114,6 +116,8 @@ class WebPlayback extends Component {
             </WebPlaybackLoading>
           );
         case 'WaitingForDevice':
+          //return child;
+          
           return (
             <WebPlaybackWaitingForDevice WaitingForDevice {...this.props}>
               {child.props.children}

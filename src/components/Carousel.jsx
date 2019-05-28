@@ -3,7 +3,6 @@ import React from 'react';
 const Carousel = props => {
 
   var { playerState } = props;
-  var { position: position_ms } = playerState;
   var { paused } = playerState;
   var {
     id,
@@ -20,46 +19,50 @@ const Carousel = props => {
       images: [{ url: album_image }]
     }
   } = playerState.track_window.current_track;
-  //console.log(playerState.track_window.previous_tracks);
+  var featureArtist = playerState.track_window.current_track.artists.map(artist => ', ' + artist.name);
+  featureArtist.shift();
+  // Change title
+  window.document.title = track_name + ' · ' + artist_name;
   var {
     prev_artist_name,
     prev_artist_uri,
     prev_album_name,
     prev_album_uri,
-    prev_album_image,
     next_artist_name,
-    next_album_image,
   } = '';
-  try {
-    if(playerState.track_window.previous_tracks !=  null) {
-      var {
-        name: prev_track_name,
-        artists:[{
-          name: prev_artist_name,
-          uri: prev_artist_uri
-        }],
-        album: {
-          name: prev_album_name,
-          uri: prev_album_uri,
-          images: [{ url: prev_album_image }]
-        }
-      } = [...playerState.track_window.previous_tracks].pop();
-    }
-    if(playerState.track_window.next_tracks[0] != null) {
-      var {
-        name: next_track_name,
-        artists:[{
-          name: next_artist_name,
-        }],
-        album: {
-          images: [{url: next_album_image}]
-        }
-      } = playerState.track_window.next_tracks[0];
+  var prev_album_image = '/unknown.png', next_album_image = '/unknown.png';
+  try { 
+    if(!paused) {
+      if(playerState.track_window.previous_tracks.length >  0) {
+        var {
+          name: prev_track_name,
+          artists:[{
+            name: prev_artist_name,
+            uri: prev_artist_uri
+          }],
+          album: {
+            name: prev_album_name,
+            uri: prev_album_uri,
+            images: [{ url: prev_album_image }]
+          }
+        } = [...playerState.track_window.previous_tracks].pop();
+      }
+      if(playerState.track_window.next_tracks.length > 0) {
+        var {
+          name: next_track_name,
+          artists:[{
+            name: next_artist_name,
+          }],
+          album: {
+            images: [{url: next_album_image}]
+          }
+        } = playerState.track_window.next_tracks[0];
+      }
     }
   } catch(err) {
     console.log(err.message);
   }
-  
+  // onClick={() => window.Spotify.PlayerInstance.previousTrack()}
   return (
     <div className='container pt-5'>
       <div className='row justify-content-md-center pt-5'>
@@ -76,7 +79,7 @@ const Carousel = props => {
               <div className="carousel-item active">
                 <img src={album_image} className="d-block w-100" alt="..."/>
                 <p className='mb-0'>{track_name}</p>
-                <p className='text-muted'>{artist_name}</p>
+                <p className='text-muted'>{artist_name}{featureArtist}</p>
               </div>
               <div className="carousel-item">
                 <img src={next_album_image} className="d-block w-100" alt="..."/>
