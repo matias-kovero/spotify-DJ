@@ -39,7 +39,7 @@ class Login extends Component {
 
     // Replace with your app's client ID, redirect URI
     const clientId = 'a5e9439fc1e44fd79f7f2ff00c6a0bc2';
-    const redirectUri = '/callback';
+    const redirectUri = 'https://'+window.location.host+'/callback'; //https://spotify-dj.now.sh/callback
     if(_token) {
       console.log(_token);
       this.props.setUserAccessToken(_token);
