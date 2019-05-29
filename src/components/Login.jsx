@@ -53,10 +53,11 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    /*
     if(window.location.pathname == '/callback') {
       this.login();
       window.location.replace('http://'+window.location.host);
-    }
+    }*/
   }
 
   render = () => {
