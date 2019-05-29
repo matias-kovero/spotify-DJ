@@ -41,6 +41,14 @@ class WebPlaybackWaitingForDevice extends Component {
     });
     instance.on("ready", data => {
       if (this.props.onPlayerReady) this.props.onPlayerReady(data);
+      const iframe = document.querySelector('iframe[src="https://sdk.scdn.co/embedded/index.html"]');
+
+      if (iframe) {
+        iframe.style.display = 'block';
+        iframe.style.position = 'absolute';
+        iframe.style.top = '-1000px';
+        iframe.style.left = '-1000px';
+      }
     });
 
     if (this.props.playerAutoConnect) {
