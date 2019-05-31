@@ -28,6 +28,7 @@ class Playlist extends Component {
     super(props);
     var { playerState } = props;
     this.state = {
+      hidden: false,
       volume: 1,
       token: props.token,
       id: playerState.track_window.current_track.id,
@@ -46,11 +47,16 @@ class Playlist extends Component {
         mode: 0,
       }
     };
+    this.toggle = this.toggle.bind(this);
     this.fadeOut = this.fadeOut.bind(this);
     this.editvolume = this.editvolume.bind(this);
     this.audioAnalysis = this.audioAnalysis.bind(this);
     this.updateList = this.updateList.bind(this);
     this.spotifyApi = this.spotifyApi.bind(this);
+  }
+
+  toggle() {
+    this.setState({hidden: !this.state.hidden});
   }
 
   fadeOut() {
@@ -193,34 +199,53 @@ class Playlist extends Component {
 
   render() {
     return (
-      <div className='col-md-2 offset-sm-10 fixed-top playlist'>
-          <label>
-            <h2 className='font-weight-lighter'>Audio Analysis</h2>
-            <small className='font-weight-light'>{this.state.track_name}</small>
-          </label>
-          <hr/>
-          {this.state.tempo ? <>
-            <h3 className='font-weight-lighter mb-0'>{this.state.tempo} BPM</h3>
+      <div className='col-md-2 offset-sm-10 fixed-bottom playlist'>
+        <div className='row'>
+          <div className='btn' onClick={this.toggle} data-toggle="collapse" data-target=".collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            {this.state.hidden ? <><i className="far fa-caret-square-up"><small className='title'> Audio Analysis</small></i></> : <i className="far fa-caret-square-down"></i>}
+          </div>
+        </div>
+        <div className={'fade collapseExample '+ (this.state.hidden ? '' : 'show')}>
+        <label>
+          <h2 className='font-weight-lighter' textstyle={{fontFamily: 'Spotify-Book'}}>Audio Analysis</h2>
+        </label>
+        <hr/>
+        {this.state.tempo ? <>
+        <small className='font-weight-light'>{this.state.track_name}</small>
+        <div className='row'>
+          <div className='col'>
+          <h5 className='font-weight-lighter mb-0'>{this.state.tempo + " BPM"}</h5>
+          <p className='text-muted'>Tempo</p>
+          </div>
+          <div className='col'>
+          <h5 className='font-weight-lighter mb-0'>{keys[this.state.key]} <small className='font-weight-lighter'>{modes[this.state.mode]}</small></h5>
+          <p className='text-muted'>Key</p>
+          </div>
+        </div>
+          <p className='mb-0'><i className="far fa-arrow-alt-circle-up"></i> {secToMin(this.state.sections[0])} - {secToMin(this.state.sections[1])} <i className="far fa-arrow-alt-circle-down"></i></p>
+          <p className='text-muted'>Mix info</p>
+        </>
+        : <i className="fas fa-compact-disc fa-2x fa-spin" style={{color: '#1DB954'}}></i>}
+        <hr/>
+        <p><small className='font-weight-lighter'>Next Track</small></p>
+        {this.state.nextTrack.tempo ? <>
+        <div className='row'>
+          <div className='col'>
+            <h5 className='font-weight-lighter mb-0'>{this.state.nextTrack.tempo} BPM</h5>
             <p className='text-muted'>Tempo</p>
-            <p className='mb-0'><i className="far fa-arrow-alt-circle-up"></i> {secToMin(this.state.sections[0])} - {secToMin(this.state.sections[1])} <i className="far fa-arrow-alt-circle-down"></i></p>
-            <p className='text-muted'>Mix info</p>
-            <h4 className='font-weight-lighter mb-0'>{keys[this.state.key]} <small className='font-weight-lighter'>{modes[this.state.mode]}</small></h4>
-            <p className='text-muted'>Key</p>
-          </>
-          : <i className="fas fa-compact-disc fa-2x fa-spin" style={{color: '#1DB954'}}></i>}
-          <hr/>
-          <p><small className='font-weight-lighter'>Next Track</small></p>
-          {this.state.nextTrack.tempo ? <>
-            <h3 className='font-weight-lighter mb-0'>{this.state.nextTrack.tempo} BPM</h3>
-            <p className='text-muted'>Tempo</p>
-            <p className='mb-0'><i className="far fa-arrow-alt-circle-up"></i> {secToMin(this.state.nextTrack.startAt)}</p>
-            <p className='text-muted'>Mix info</p>
-            <h4 className='font-weight-lighter mb-0'>{keys[this.state.nextTrack.key]} <small className='font-weight-lighter'>{modes[this.state.nextTrack.mode]}</small></h4>
+          </div>
+          <div className='col'>
+            <h5 className='font-weight-lighter mb-0'>{keys[this.state.nextTrack.key]} <small className='font-weight-lighter'>{modes[this.state.nextTrack.mode]}</small></h5>
             <p className='text-muted'>Key</p> 
-          </>
-          :<i className="fas fa-compact-disc fa-2x fa-spin" style={{color: '#1DB954'}}></i>}
-          <br />
-          <br />
+          </div>
+        </div>
+          <p className='mb-0'><i className="far fa-arrow-alt-circle-up"></i> {secToMin(this.state.nextTrack.startAt)}</p>
+          <p className='text-muted'>Mix info</p>
+        </>
+        :<i className="fas fa-compact-disc fa-2x fa-spin" style={{color: '#1DB954'}}></i>}
+        <br />
+        <br />
+        </div>
       </div>
     );
   }

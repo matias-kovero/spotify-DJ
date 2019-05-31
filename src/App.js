@@ -114,7 +114,7 @@ class App extends Component {
             </Screen>
 
             <Screen Player>
-              <h1>Spotify DJ</h1>
+              <h1 className='title'>Spotify DJ</h1>
               {this.state.playerState && <Carousel playerState={this.state.playerState} />}
               {this.state.playerState && <Player playerState={this.state.playerState} />}
             </Screen>

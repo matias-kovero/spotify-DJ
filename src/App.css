@@ -9,6 +9,9 @@ html, body {
 .App-link {
   color: #61dafb;
 }
+.title {
+  font-family: 'Spotify-Black';
+}
 /* Edit buttons color on hover */
 .btn i{
   color: #d3d3d3;
@@ -20,11 +23,11 @@ html, body {
 .playlist {
   background-color: #282828;
   border-radius: 10px;
-  padding-top: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 7rem;
 }
 .player {
   background-color: #282828;
+  max-height: 7.5rem;
 }
 .album-cover img{
   height: 80px;
