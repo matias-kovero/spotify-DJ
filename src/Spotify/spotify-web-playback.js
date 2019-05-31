@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SelectDevice from '../components/SelectDevice';
 
 // Placeholder
 window.onSpotifyWebPlaybackSDKReady = () => {};

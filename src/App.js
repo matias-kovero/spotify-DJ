@@ -3,6 +3,7 @@ import { Cookies } from 'react-cookie';
 import './App.css';
 
 import Player from './components/Player';
+import Playlist from './components/Playlist';
 // Add Spotify Web Playback for React
 import {
   WebPlaybackScreen as Screen,
@@ -74,6 +75,10 @@ class App extends Component {
     });
   }
 
+  updatePlayerState() {
+    
+  }
+
   render(){
     return (
       <div className="App">
@@ -93,8 +98,7 @@ class App extends Component {
             }}
             onPlayerStateChange={(playerState) => {
               this.setState({ playerState: playerState });
-            }
-            }
+            }}
             setError={(message) => {console.log(message); this.setState({userAccessToken: null})}}>
 
             <Screen Error>
@@ -115,6 +119,7 @@ class App extends Component {
               {this.state.playerState && <Player playerState={this.state.playerState} />}
             </Screen>
           </WebPlayback> }
+          {this.state.playerState && <Playlist update={this.updatePlayerState} playerState={this.state.playerState} token={this.state.userAccessToken}/>}
         <br />
       </div>
     );

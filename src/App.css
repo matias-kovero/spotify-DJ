@@ -6,9 +6,22 @@ html, body {
   background-color: #000;
   color: #FFF;
 }
-
 .App-link {
   color: #61dafb;
+}
+/* Edit buttons color on hover */
+.btn i{
+  color: #d3d3d3;
+}
+.btn i:hover {
+  color: #FFF;
+}
+/* End button edit on hover */
+.playlist {
+  background-color: #282828;
+  border-radius: 10px;
+  padding-top: 1rem;
+  margin-top: 1rem;
 }
 .player {
   background-color: #282828;

@@ -49,21 +49,18 @@ class Controls extends Component {
           onClick={() => window.Spotify.PlayerInstance.previousTrack()}>
           <i 
             className="fas fa-backward"
-            style={{color: '#FFF'}}
           />
         </div>
         <div className='btn'
           onClick={this.handePlayPause}>
           <i 
             className={this.props.paused ? 'far fa-play-circle fa-3x' : 'far fa-pause-circle fa-3x'}
-            style={{color: '#FFF'}}
           />
         </div>
         <div className='btn fa-1x mt-3'
           onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
           <i 
             className="fas fa-forward"
-            style={{color: '#FFF'}}
           />
         </div>
       </div>

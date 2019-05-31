@@ -30,14 +30,12 @@ class Rangeslider extends Component {
     // unMute 
     window.Spotify.PlayerInstance.setVolume(this.state.temp).then(() => {
       this.setState({volume: this.state.temp});
-      console.log('unmute');
     })
     :
     // Mute
     window.Spotify.PlayerInstance.setVolume(0).then(() => {
       this.setState({temp: this.state.volume});
       this.setState({volume: 0});
-      console.log('mute');
     });
     }
   }

@@ -5,7 +5,6 @@ const Carousel = props => {
   var { playerState } = props;
   var { paused } = playerState;
   var {
-    id,
     uri: track_uri,
     name: track_name,
     duration_ms,
