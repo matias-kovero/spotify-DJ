@@ -1,16 +1,25 @@
 html, body {
   background: #000;
+  height: 100%;
+  overflow: hidden;
 }
-.App {
+.App, #root {
   text-align: center;
   background-color: #000;
   color: #FFF;
+  height: 100%;
+  overflow: hidden;
 }
 .App-link {
   color: #61dafb;
 }
 .title {
   font-family: 'Spotify-Black';
+  padding-top: 2rem;
+  font-size: 5rem;
+}
+.h-100 {
+  overflow: hidden;
 }
 /* Edit buttons color on hover */
 .btn i{
@@ -35,8 +44,13 @@ html, body {
 .album-cover {
   padding: 1rem 0rem 0rem 2rem;
 }
-.w-100, .d-block {
+.w-100 {
   border-radius: 6%;
+}
+.my-auto {
+  width: 70%;
+  border-radius: 10%;
+  opacity: 0.2;
 }
 .song-info {
   overflow: hidden;

@@ -63,13 +63,13 @@ const Carousel = props => {
   }
   // onClick={() => window.Spotify.PlayerInstance.previousTrack()}
   return (
-    <div className='container pt-5'>
-      <div className='row justify-content-md-center pt-5'>
-        <div className='col col-lg-2 pt-5' onClick={() => window.Spotify.PlayerInstance.previousTrack()}>
-          <img src={prev_album_image} className="d-block w-100" alt="..." />
+    <div className='container h-100'>
+      <div className='row align-items-center h-100'>
+        <div className='col' onClick={() => window.Spotify.PlayerInstance.previousTrack()}>
+          <img src={prev_album_image} className="w-70 my-auto" alt="..." />
           <p className='text-muted'>{prev_track_name}</p>
         </div>
-        <div className='col-md-auto'>
+        <div className='col'>
           <div id="carouselExampleFade" className="carousel slide carousel-fade" data-ride="carousel" data-interval={false}>
             <div className="carousel-inner">
               <div className="carousel-item">
@@ -94,8 +94,8 @@ const Carousel = props => {
             </b>
           </div>
         </div>
-        <div className='col col-lg-2 pt-5' onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
-          <img src={next_album_image} className="d-block w-100" alt="..." />
+        <div className='col' onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
+          <img src={next_album_image} className="w-70 my-auto" alt="..." />
           <p className='text-muted'>{next_track_name}</p>
         </div>
       </div>

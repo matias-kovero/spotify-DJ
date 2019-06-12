@@ -202,7 +202,7 @@ class Playlist extends Component {
       <div className='col-md-2 offset-sm-10 fixed-bottom playlist'>
         <div className='row'>
           <div className='btn' onClick={this.toggle} data-toggle="collapse" data-target=".collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            {this.state.hidden ? <><i className="far fa-caret-square-up"><small className='title'> Audio Analysis</small></i></> : <i className="far fa-caret-square-down"></i>}
+            {this.state.hidden ? <><i className="far fa-caret-square-up"><small className=''> Audio Analysis</small></i></> : <i className="far fa-caret-square-down"></i>}
           </div>
         </div>
         <div className={'fade collapseExample '+ (this.state.hidden ? '' : 'show')}>
