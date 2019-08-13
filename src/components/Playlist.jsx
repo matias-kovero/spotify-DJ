@@ -132,6 +132,7 @@ class Playlist extends Component {
   componentDidUpdate() {
     // CHECK IF TRACK HAS CHANGED
     if(this.props.playerState.track_window.current_track.id != this.state.id) {
+      this.props.update();
       // CURRENT TRACK
       this.setState({id: this.props.playerState.track_window.current_track.id});
       this.setState({track_name: this.props.playerState.track_window.current_track.name});
@@ -199,7 +200,7 @@ class Playlist extends Component {
 
   render() {
     return (
-      <div className='col-md-2 offset-sm-10 fixed-bottom playlist'>
+      <div className='col-md-2 offset-sm-10 fixed-bottom playlist hidden'>
         <div className='row'>
           <div className='btn' onClick={this.toggle} data-toggle="collapse" data-target=".collapseExample" aria-expanded="false" aria-controls="collapseExample">
             {this.state.hidden ? <><i className="far fa-caret-square-up"><small className=''> Audio Analysis</small></i></> : <i className="far fa-caret-square-down"></i>}

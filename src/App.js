@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Cookies } from 'react-cookie';
 import './App.css';
+import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 
 import Player from './components/Player';
 import Playlist from './components/Playlist';
@@ -11,7 +12,9 @@ import {
 } from './Spotify/spotify-web-playback.js';
 import Carousel from './components/Carousel';
 import Login from './components/Login';
+const colorThief = new ColorThief();
 const Cookie = new Cookies();
+const { getColorFromURL } = require('color-thief-node');
 
 class App extends Component {
   constructor(props) {
@@ -23,6 +26,8 @@ class App extends Component {
     }
     this.spotifyApi = this.spotifyApi.bind(this);
     this.selectSpotifyDJ = this.selectSpotifyDJ.bind(this);
+    this.updatePlayerState = this.updatePlayerState.bind(this);
+    this.getBase64Image = this.getBase64Image.bind(this);
   }
   spotifyApi(url) {
     fetch(url, {
@@ -48,6 +53,7 @@ class App extends Component {
   }
 
   selectSpotifyDJ(deviceID) {
+    console.log(deviceID);
     fetch('https://api.spotify.com/v1/me/player', {
       method: 'PUT',
       headers: {
@@ -75,8 +81,27 @@ class App extends Component {
     });
   }
 
-  updatePlayerState() {
-    
+  getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
+  async updatePlayerState() {
+    console.log('Song changed?');
+    let root = document.getElementsByClassName('root')[0];
+    let album_cover = document.getElementsByClassName('album-cover')[0];
+    let img = album_cover.querySelector('img');
+    img.crossOrigin = "Anonymous";
+    const dominantColor = await getColorFromURL(img.src);
+    console.log(dominantColor);
   }
 
   render(){

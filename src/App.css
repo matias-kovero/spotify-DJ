@@ -13,6 +13,9 @@ html, body {
 .App-link {
   color: #61dafb;
 }
+.hidden {
+  display: none;
+}
 .title {
   font-family: 'Spotify-Black';
   padding-top: 2rem;
@@ -30,19 +33,20 @@ html, body {
 }
 /* End button edit on hover */
 .playlist {
-  background-color: #282828;
+  background-color: #28282891;
   border-radius: 10px;
   margin-bottom: 7rem;
 }
 .player {
-  background-color: #282828;
+  background-color: #28282891;
   max-height: 7.5rem;
+  opacity: 0.6;
 }
 .album-cover img{
   height: 80px;
 }
 .album-cover {
-  padding: 1rem 0rem 0rem 2rem;
+  padding: 1.3rem 0rem 0rem 0rem;
 }
 .w-100 {
   border-radius: 6%;
@@ -55,6 +59,7 @@ html, body {
 .song-info {
   overflow: hidden;
   white-space: nowrap;
+  margin-top: 1rem;
 }
 .text-muted {
   margin-bottom: .6rem;
@@ -180,7 +185,9 @@ html, body {
 .rangeslider-horizontal {
   height: 5px;
   border-radius: 5px;
-  width: 50%;
+}
+.songtime {
+  width: 80%;
 }
 .rangeslider-horizontal .rangeslider__fill {
   height: 100%;

@@ -84,14 +84,6 @@ const Carousel = props => {
                 <img src={next_album_image} className="d-block w-100" alt="..."/>
               </div>
             </div>
-            <b className="carousel-control-prev" style={{height: '82%'}} role="button"  onClick={() => window.Spotify.PlayerInstance.previousTrack()}>
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
-            </b>
-            <b className="carousel-control-next" style={{height: '82%'}} role="button" onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
-            </b>
           </div>
         </div>
         <div className='col' onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
