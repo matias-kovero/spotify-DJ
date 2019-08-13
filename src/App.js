@@ -14,7 +14,7 @@ import Carousel from './components/Carousel';
 import Login from './components/Login';
 const colorThief = new ColorThief();
 const Cookie = new Cookies();
-const { getColorFromURL } = require('color-thief-node');
+//const { getColorFromURL, getColor } = require('color-thief-node');
 
 class App extends Component {
   constructor(props) {
@@ -96,12 +96,12 @@ class App extends Component {
 
   async updatePlayerState() {
     console.log('Song changed?');
-    let root = document.getElementsByClassName('root')[0];
-    let album_cover = document.getElementsByClassName('album-cover')[0];
-    let img = album_cover.querySelector('img');
-    img.crossOrigin = "Anonymous";
-    const dominantColor = await getColorFromURL(img.src);
-    console.log(dominantColor);
+    setTimeout(() => {
+      let root = document.getElementById('root');
+      let album_cover = document.getElementsByClassName('album-cover')[0];
+      let dc = colorThief.getColor(album_cover.querySelector('img'));
+      root.style.backgroundColor = 'rgba('+dc[0]+','+dc[1]+','+dc[2]+',0.2)';
+    }, 200);
   }
 
   render(){

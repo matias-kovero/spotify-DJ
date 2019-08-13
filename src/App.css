@@ -3,9 +3,11 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
+#root {
+  background-color: #000;
+}
 .App, #root {
   text-align: center;
-  background-color: #000;
   color: #FFF;
   height: 100%;
   overflow: hidden;
@@ -40,7 +42,7 @@ html, body {
 .player {
   background-color: #28282891;
   max-height: 7.5rem;
-  opacity: 0.6;
+  opacity: 0.94;
 }
 .album-cover img{
   height: 80px;

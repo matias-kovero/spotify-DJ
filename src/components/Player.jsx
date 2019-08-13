@@ -35,7 +35,7 @@ const Player = props => {
     <div className='row align-items-top player fixed-bottom justify-content-center'>
       <div className='left-bar col-3 row'>
         <div className='album-cover'>
-          <img src={getImageColors(album_image)} alt={track_name} className='d-block' />
+          <img src={album_image} alt={track_name} crossOrigin='anonymous' className='d-block' />
         </div>
         <div className='song-info text-left col'>
           <b><a href={album_uri} target='_blank'>{track_name}</a></b>
