@@ -29,7 +29,7 @@ class Playlist extends Component {
     var { playerState } = props;
     this.state = {
       hidden: false,
-      volume: 1,
+      volume: props.volume,
       token: props.token,
       id: playerState.track_window.current_track.id,
       track_name: playerState.track_window.current_track.name,
@@ -61,19 +61,18 @@ class Playlist extends Component {
 
   fadeOut() {
     if(!moving) { // WILL TRIGGER 1st TIME
-      console.log('FADE OUT');
+      this.setState({volume: this.props.volume});
       moving = true;
-    } if(this.state.volume > 0.1 && moving) { // Turn volume down slowly
+    } if(this.state.volume > 0.01 && moving) { // Turn volume down slowly
       setTimeout(() => {
-        this.editvolume(-0.1);
+        this.editvolume(-0.01);
         this.fadeOut();
-      }, 200);
+      }, 40);
     } else {
       window.Spotify.PlayerInstance.nextTrack();
       window.Spotify.PlayerInstance.seek(this.state.nextTrack.startAt * 1000 - 2000);
       setTimeout(() => {
         moving = false;
-        console.log('END');
         this.fadeIn();
       }, 1000);
     }
@@ -81,17 +80,15 @@ class Playlist extends Component {
 
   fadeIn() {
     if(!moving) {
-      console.log('SKIP');
       moving = true;
       //window.Spotify.PlayerInstance.seek(this.state.sections[0] * 1000 - 3000);
-    } if(this.state.volume < 0.9 && moving) {
+    } if(this.state.volume < this.props.volume && moving) {
       setTimeout(() => {
-        this.editvolume(0.1);
+        this.editvolume(0.01);
         this.fadeIn();
-      }, 100);
+      }, 40);
     } else {
       moving = false;
-      console.log('SHOULD PLAY AT', secToMin(this.state.sections[0]));
     }
   }
 

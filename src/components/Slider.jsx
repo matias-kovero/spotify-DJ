@@ -13,7 +13,7 @@ class Rangeslider extends Component {
 
     this.props.type == 'volume' ? 
     this.state = {
-      volume: 1,
+      volume: this.props.volume,
       max: 1,
       temp: 1,
     } : 
@@ -30,12 +30,14 @@ class Rangeslider extends Component {
     // unMute 
     window.Spotify.PlayerInstance.setVolume(this.state.temp).then(() => {
       this.setState({volume: this.state.temp});
+      this.props.updateVolume(this.state.temp);
     })
     :
     // Mute
     window.Spotify.PlayerInstance.setVolume(0).then(() => {
       this.setState({temp: this.state.volume});
       this.setState({volume: 0});
+      this.props.updateVolume(this.state.volume);
     });
     }
   }
@@ -44,6 +46,7 @@ class Rangeslider extends Component {
     this.setState({volume: value});
     window.Spotify.PlayerInstance.setVolume(value).then(() => {
       this.setState({volume: value});
+      this.props.updateVolume(value);
     });
   }
   seek = (value) => {

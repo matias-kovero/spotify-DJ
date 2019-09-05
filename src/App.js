@@ -23,11 +23,13 @@ class App extends Component {
       userAccessToken: Cookie.get('SPOTIFY_TOKEN') || null,
       playerState: null,
       info: '',
+      volume: 1.0,
     }
     this.spotifyApi = this.spotifyApi.bind(this);
     this.selectSpotifyDJ = this.selectSpotifyDJ.bind(this);
     this.updatePlayerState = this.updatePlayerState.bind(this);
     this.getBase64Image = this.getBase64Image.bind(this);
+    this.updateVolume = this.updateVolume.bind(this);
   }
   spotifyApi(url) {
     fetch(url, {
@@ -50,6 +52,11 @@ class App extends Component {
     }).catch(err => {
       console.log(err.name + ' | ' + err.message);
     });
+  }
+
+  updateVolume(newVolume) {
+    console.log('Updated volume', newVolume);
+    this.setState(prevState => ({...prevState, volume: newVolume}))
   }
 
   selectSpotifyDJ(deviceID) {
@@ -113,7 +120,7 @@ class App extends Component {
         {this.state.userAccessToken &&
           <WebPlayback
             playerName="Spotify DJ"
-            playerInitialVolume={1.0}
+            playerInitialVolume={this.state.volume}
             playerAutoConnect={true}
             userAccessToken={this.state.userAccessToken}
             onPlayerReady={(data) => {
@@ -140,10 +147,10 @@ class App extends Component {
             <Screen Player>
               <h1 className='title fixed-top'>Spotify DJ</h1>
               {this.state.playerState && <Carousel playerState={this.state.playerState} />}
-              {this.state.playerState && <Player playerState={this.state.playerState} />}
+              {this.state.playerState && <Player playerState={this.state.playerState} updateVolume={this.updateVolume} volume={this.state.volume}/>}
             </Screen>
           </WebPlayback> }
-          {this.state.playerState && <Playlist update={this.updatePlayerState} playerState={this.state.playerState} token={this.state.userAccessToken}/>}
+          {this.state.playerState && <Playlist update={this.updatePlayerState} playerState={this.state.playerState} token={this.state.userAccessToken} volume={this.state.volume}/>}
         <br />
       </div>
     );

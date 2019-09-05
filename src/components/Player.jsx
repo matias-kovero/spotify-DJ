@@ -6,7 +6,6 @@ import ColorThief from '../../node_modules/colorthief/dist/color-thief.mjs';
 const colorThief = new ColorThief();
 
 const Player = props => {
-
   var { playerState } = props;
   var { position: position_ms } = playerState;
   var { paused, shuffle } = playerState;
@@ -49,7 +48,7 @@ const Player = props => {
       </div>
       <div className='right-bar col-3 row justify-content-end'>
         <div className='volume pt-3 mt-3 mr-4'>
-          <Slider type={'volume'}/>
+          <Slider type={'volume'} updateVolume={props.updateVolume} volume={props.volume}/>
         </div>
       </div>
     </div>
