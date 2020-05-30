@@ -23,7 +23,7 @@ class App extends Component {
       userAccessToken: Cookie.get('SPOTIFY_TOKEN') || null,
       playerState: null,
       info: '',
-      volume: 1.0,
+      volume: 0.5,
     }
     this.spotifyApi = this.spotifyApi.bind(this);
     this.selectSpotifyDJ = this.selectSpotifyDJ.bind(this);
@@ -105,7 +105,7 @@ class App extends Component {
     console.log('Song changed?');
     setTimeout(() => {
       let root = document.getElementById('root');
-      let album_cover = document.getElementsByClassName('album-cover')[0];
+      let album_cover = document.getElementsByClassName('songPlayer')[0];
       let dc = colorThief.getColor(album_cover.querySelector('img'));
       root.style.backgroundColor = 'rgba('+dc[0]+','+dc[1]+','+dc[2]+',0.2)';
     }, 200);
@@ -145,9 +145,12 @@ class App extends Component {
             </Screen>
 
             <Screen Player>
-              <h1 className='title fixed-top'>Spotify DJ</h1>
+              <div className='fixed-top'>
+                <h1 className='title'>Spotify DJ</h1>
+                {this.state.playerState && <h3 className='playlist-title'>{this.state.playerState.context.metadata.context_description}</h3>}
+                <p className='author text-muted'>by Matias Kovero</p>
+              </div>
               {this.state.playerState && <Carousel playerState={this.state.playerState} />}
-              {this.state.playerState && <Player playerState={this.state.playerState} updateVolume={this.updateVolume} volume={this.state.volume}/>}
             </Screen>
           </WebPlayback> }
           {this.state.playerState && <Playlist update={this.updatePlayerState} playerState={this.state.playerState} token={this.state.userAccessToken} volume={this.state.volume}/>}

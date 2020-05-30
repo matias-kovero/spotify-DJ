@@ -1,9 +1,12 @@
 import React from 'react';
+import Controls from './Controls';
+import Slider from './Slider';
 
 const Carousel = props => {
 
   var { playerState } = props;
   var { paused } = playerState;
+  var { position: position_ms } = playerState;
   var {
     uri: track_uri,
     name: track_name,
@@ -65,30 +68,18 @@ const Carousel = props => {
   return (
     <div className='container h-100'>
       <div className='row align-items-center h-100'>
-        <div className='col' onClick={() => window.Spotify.PlayerInstance.previousTrack()}>
-          <img src={prev_album_image} className="w-70 my-auto" alt="..." />
-          <p className='text-muted'>{prev_track_name}</p>
-        </div>
-        <div className='col'>
-          <div id="carouselExampleFade" className="carousel slide carousel-fade" data-ride="carousel" data-interval={false}>
-            <div className="carousel-inner">
-              <div className="carousel-item">
-                <img src={prev_album_image} className="d-block w-100" alt="..." />
+        <div className='col-md-auto w-100'>
+          <div className='songPlayer'>
+            <img src={album_image} className={`vinyl ${paused ? 'paused' : 'playing'}`} alt="..." crossOrigin='anonymous' />
+            <div className='trackInfo col-6'>
+              <p className='text-left mb-0'><b className='song-info'><a href={album_uri} target='_blank'>{track_name}</a></b></p>
+              <p className='text-muted text-left'><a href={artist_uri} target='_blank' className='text-muted'>{artist_name}</a>{featureArtist}</p>
+              <div className='center-bar controls justify-content-center'>
+                <Slider type={'songtime'} songDuration={duration_ms} songPosition={position_ms} />
               </div>
-              <div className="carousel-item active">
-                <img src={album_image} className="d-block w-100" alt="..."/>
-                <p className='mb-0'>{track_name}</p>
-                <p className='text-muted'>{artist_name}{featureArtist}</p>
-              </div>
-              <div className="carousel-item">
-                <img src={next_album_image} className="d-block w-100" alt="..."/>
-              </div>
+              <Controls paused={paused}/>
             </div>
           </div>
-        </div>
-        <div className='col' onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
-          <img src={next_album_image} className="w-70 my-auto" alt="..." />
-          <p className='text-muted'>{next_track_name}</p>
         </div>
       </div>
     </div>
@@ -96,3 +87,21 @@ const Carousel = props => {
 };
 
 export default Carousel;
+// MAIN COLUMN
+/*
+<div id="carouselExampleFade" className="carousel slide carousel-fade" data-ride="carousel" data-interval={false}>
+  <div className="carousel-inner">
+    <div className="carousel-item">
+      <img src={prev_album_image} className="d-block w-100" alt="..." />
+    </div>
+    <div className="carousel-item active">
+      <img src={album_image} className="d-block w-100" alt="..."/>
+      <p className='mb-0'>{track_name}</p>
+      <p className='text-muted'>{artist_name}{featureArtist}</p>
+    </div>
+    <div className="carousel-item">
+      <img src={next_album_image} className="d-block w-100" alt="..."/>
+    </div>
+  </div>
+</div>
+*/

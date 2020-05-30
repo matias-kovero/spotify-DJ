@@ -23,12 +23,62 @@ html, body {
   padding-top: 2rem;
   font-size: 5rem;
 }
+.playlist-title {
+  font-family: 'Spotify-Black';
+  padding-top: 2rem;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0;
+  left: 1em;
+}
+.author {
+  position: relative;
+  top: -1.9em;
+  left: -2.6em;
+  word-spacing: .2em;
+  letter-spacing: .1em;
+  color: #ffffff1f !important;
+}
 .h-100 {
   overflow: hidden;
 }
+.paused {
+  animation-play-state: paused !important;
+}
+.songPlayer {
+  display: flex;
+  border-radius: 1.5em;
+  background-color: #28282891;
+  height: 15em;
+  box-shadow: #0000000d 1px 2px 8px 0px;
+}
+.vinyl {
+  margin: -2em 0 -2em 0;
+  border-radius: 50%;
+  background-color: #28282891;
+  padding: 0.7em;
+  border: #0000000d 1px solid;
+  animation: spinner-border 15s linear infinite;
+  position: absolute;
+  left: 3em;
+  -webkit-mask-image: radial-gradient(.5em at 50% 50% , #00000000 99%, black 100%);
+}
+.trackInfo {
+  position: absolute;
+  left: 35%;
+  top: 3em;
+}
+
+.control-buttons {
+  display: flow-root;
+  position: relative;
+  vertical-align: middle;
+}
+
 /* Edit buttons color on hover */
 .btn i{
   color: #d3d3d3;
+  cursor: pointer;
 }
 .btn i:hover {
   color: #FFF;
@@ -125,8 +175,6 @@ html, body {
 .time {
   font-size: .8rem;
   font-weight: 100;
-  width: 30px;
-  margin: .7rem;
 }
 /**
 * Rangeslider
@@ -187,9 +235,6 @@ html, body {
 .rangeslider-horizontal {
   height: 5px;
   border-radius: 5px;
-}
-.songtime {
-  width: 80%;
 }
 .rangeslider-horizontal .rangeslider__fill {
   height: 100%;

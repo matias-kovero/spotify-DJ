@@ -56,8 +56,9 @@ class Rangeslider extends Component {
 
   render() {
     return(
-      <div className='row justify-content-md-center'>
-        {this.props.type == 'volume' ? <div className='volume-icon' onClick={this.handleMute}><i style={{color: '#d3d3d3'}}className={this.state.volume === 0 ? 'fas fa-volume-mute' : (this.state.volume > 0.5) ? 'fas fa-volume-up' : 'fas fa-volume-down'}></i></div> : <small className='time'>{millisToMinutesAndSeconds(this.props.songPosition)}</small>}
+      <>
+      <div className='justify-content-md-center'>
+        {this.props.type == 'volume' ? <div className='volume-icon' onClick={this.handleMute}><i style={{color: '#d3d3d3'}}className={this.state.volume === 0 ? 'fas fa-volume-mute' : (this.state.volume > 0.5) ? 'fas fa-volume-up' : 'fas fa-volume-down'}></i></div> : null}
         <Slider
           className={this.props.type}
           step={0.05} 
@@ -66,8 +67,13 @@ class Rangeslider extends Component {
           max={this.props.type == 'volume'? this.state.max : this.props.songDuration} 
           onChange={this.props.type == 'volume' ? this.changeVolume : this.seek }
         />
-         {this.props.type == 'volume' ? '' : <small className='time'>{millisToMinutesAndSeconds(this.props.songDuration)}</small>}
+         {this.props.type == 'volume' ? '' : null}
       </div>
+      <div>
+        <small className='time float-left'>{millisToMinutesAndSeconds(this.props.songPosition)}</small>
+        <small className='time float-right'>{millisToMinutesAndSeconds(this.props.songDuration)}</small>
+      </div>
+      </>
     )
   }
 };

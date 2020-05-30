@@ -44,24 +44,15 @@ class Controls extends Component {
   /* This lifecycle hook gets executed when the component mounts */
   render() {
     return(
-      <div className='btn-group mt-3'>
-        <div className='btn fa-1x mt-3'
-          onClick={() => window.Spotify.PlayerInstance.previousTrack()}>
-          <i 
-            className="fas fa-backward"
-          />
+      <div className='col control-buttons mt-3'>
+        <div className='btn fa-1x'>
+          <i className="fas fa-backward" onClick={() => window.Spotify.PlayerInstance.previousTrack()}/>
         </div>
-        <div className='btn'
-          onClick={this.handePlayPause}>
-          <i 
-            className={this.props.paused ? 'far fa-play-circle fa-3x' : 'far fa-pause-circle fa-3x'}
-          />
+        <div className='btn'>
+          <i className={this.props.paused ? 'far fa-play-circle fa-3x' : 'far fa-pause-circle fa-3x'} onClick={this.handePlayPause} />
         </div>
-        <div className='btn fa-1x mt-3'
-          onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
-          <i 
-            className="fas fa-forward"
-          />
+        <div className='btn fa-1x '>
+          <i className="fas fa-forward" onClick={() => window.Spotify.PlayerInstance.nextTrack()} />
         </div>
       </div>
     );
