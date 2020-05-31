@@ -5,6 +5,7 @@
   "dependencies": {
     "color-thief-node": "^1.0.3",
     "colorthief": "^2.3.0",
+    "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",

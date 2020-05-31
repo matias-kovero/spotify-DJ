@@ -107,7 +107,7 @@ class Playlist extends Component {
         'Authorization': 'Bearer ' + this.props.token
       }
     }).then((response) => {
-      if(response.status == 200){
+      if(response.status === 200){
         response.json().then((responseJson) => {
           this.setState({[param]: responseJson});
         }).catch(err => {
@@ -123,12 +123,12 @@ class Playlist extends Component {
 
   componentDidMount() {
     this.audioAnalysis();
-    console.log(this.props);
+    //console.log(this.props);
   }
 
   componentDidUpdate() {
     // CHECK IF TRACK HAS CHANGED
-    if(this.props.playerState.track_window.current_track.id != this.state.id) {
+    if(this.props.playerState.track_window.current_track.id !== this.state.id) {
       this.props.update();
       // CURRENT TRACK
       this.setState({id: this.props.playerState.track_window.current_track.id});

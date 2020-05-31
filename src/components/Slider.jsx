@@ -11,7 +11,7 @@ class Rangeslider extends Component {
   constructor(props) {
     super(props);
 
-    this.props.type == 'volume' ? 
+    this.props.type === 'volume' ? 
     this.state = {
       volume: this.props.volume,
       max: 1,
@@ -26,7 +26,7 @@ class Rangeslider extends Component {
   }
   
   handleMute() {
-    {this.state.volume == 0 ?
+    this.state.volume === 0 ?
     // unMute 
     window.Spotify.PlayerInstance.setVolume(this.state.temp).then(() => {
       this.setState({volume: this.state.temp});
@@ -39,7 +39,6 @@ class Rangeslider extends Component {
       this.setState({volume: 0});
       this.props.updateVolume(this.state.volume);
     });
-    }
   }
 
   changeVolume = (value) => {
@@ -49,6 +48,7 @@ class Rangeslider extends Component {
       this.props.updateVolume(value);
     });
   }
+
   seek = (value) => {
     window.Spotify.PlayerInstance.seek(value).then(() => {
     });
@@ -58,16 +58,16 @@ class Rangeslider extends Component {
     return(
       <>
       <div className='justify-content-md-center'>
-        {this.props.type == 'volume' ? <div className='volume-icon' onClick={this.handleMute}><i style={{color: '#d3d3d3'}}className={this.state.volume === 0 ? 'fas fa-volume-mute' : (this.state.volume > 0.5) ? 'fas fa-volume-up' : 'fas fa-volume-down'}></i></div> : null}
+        {this.props.type === 'volume' ? <div className='volume-icon' onClick={this.handleMute}><i style={{color: '#d3d3d3'}}className={this.state.volume === 0 ? 'fas fa-volume-mute' : (this.state.volume > 0.5) ? 'fas fa-volume-up' : 'fas fa-volume-down'}></i></div> : null}
         <Slider
           className={this.props.type}
           step={0.05} 
-          value={this.props.type == 'volume' ? this.state.volume : this.props.songPosition}
+          value={this.props.type === 'volume' ? this.state.volume : this.props.songPosition}
           min={0} 
-          max={this.props.type == 'volume'? this.state.max : this.props.songDuration} 
-          onChange={this.props.type == 'volume' ? this.changeVolume : this.seek }
+          max={this.props.type === 'volume'? this.state.max : this.props.songDuration} 
+          onChange={this.props.type === 'volume' ? this.changeVolume : this.seek }
         />
-         {this.props.type == 'volume' ? '' : null}
+         {this.props.type === 'volume' ? '' : null}
       </div>
       <div>
         <small className='time float-left'>{millisToMinutesAndSeconds(this.props.songPosition)}</small>
