@@ -1,30 +1,4 @@
 import React, { Component } from "react";
-/*
-const Controls = props => {
-  return (
-    <div>
-      <button 
-        onClick={() => window.Spotify.PlayerInstance.previousTrack()}>
-        Previous Track
-      </button>
-      <button 
-        onClick={() => window.Spotify.PlayerInstance.resume()}>
-        Resume
-      </button>
-      <button 
-        onClick={() => window.Spotify.PlayerInstance.pause()}>
-        Pause
-      </button>
-      <button 
-        onClick={() => window.Spotify.PlayerInstance.nextTrack()}>
-        Next Track
-      </button>
-    </div>
-  );
-};
-
-export default Controls;*/
-
 
 class Controls extends Component {
   constructor(props) {

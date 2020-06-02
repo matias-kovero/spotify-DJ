@@ -3,7 +3,6 @@ import { Cookies } from 'react-cookie';
 import './App.css';
 import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 
-import Player from './components/Player';
 import Playlist from './components/Playlist';
 // Add Spotify Web Playback for React
 import {
@@ -39,7 +38,7 @@ class App extends Component {
         'Authorization': 'Bearer ' + Cookie.get('_spat')
       }
     }).then((response) => {
-      if(response.status == 200){
+      if(response.status === 200){
         response.json().then((responseJson) => {
           return responseJson; //console.log(responseJson);
         }).catch(err => {
@@ -71,7 +70,7 @@ class App extends Component {
       })
     }).then((response) => {
       if(response.status === (204 || 200)) {
-        setTimeout(() => window.Spotify.PlayerInstance.togglePlay(), 1000);
+        setTimeout(() => window.Spotify.PlayerInstance.resume(), 1000);
       } else {
         console.log('Response status: ', response.status)
         console.log(response.status === (204 || 200));
@@ -100,7 +99,7 @@ class App extends Component {
       let album_cover = document.getElementsByClassName('songPlayer')[0];
       if(album_cover) {
         let dc = colorThief.getColor(album_cover.querySelector('img'));
-        root.style.backgroundColor = 'rgba('+dc[0]+','+dc[1]+','+dc[2]+',0.2)';
+        root.style.backgroundColor = `rgba(${dc[0]},${dc[1]},${dc[2]}, 0.3)`;
       }
     }, 200);
   }

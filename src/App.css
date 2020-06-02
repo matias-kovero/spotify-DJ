@@ -4,7 +4,7 @@ html, body {
   overflow: hidden;
 }
 #root {
-  background-color: #000;
+  background-color: #0000008f;
 }
 .App, #root {
   text-align: center;
@@ -22,22 +22,25 @@ html, body {
   font-family: 'Spotify-Black';
   padding-top: 2rem;
   font-size: 5rem;
+  filter: drop-shadow(0px 4px 2px rgba(20,20,20,0.8));
 }
 .playlist-title {
   font-family: 'Spotify-Black';
-  padding-top: 2rem;
+  padding-top: 1.2rem;
   font-size: 1.5rem;
   position: absolute;
   top: 0;
   left: 1em;
+  filter: drop-shadow(0px 4px 2px rgba(20,20,20,0.8));
 }
 .author {
   position: relative;
-  top: -1.9em;
+  top: -1.7em;
   left: -2.6em;
   word-spacing: .2em;
   letter-spacing: .1em;
-  color: #ffffff1f !important;
+  color: #ffffff0d !important;
+  filter: drop-shadow(0px 4px 2px black);
 }
 .h-100 {
   overflow: hidden;
@@ -48,25 +51,29 @@ html, body {
 .songPlayer {
   display: flex;
   border-radius: 1.5em;
-  background-color: #28282891;
   height: 15em;
-  box-shadow: #0000000d 1px 2px 8px 0px;
+  box-shadow: 0px 1px 4px 0px rgba(0,0,0,.05), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.1), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.15), inset 0px 20px 20px 0px rgba(255, 255, 255, 0.01);
+  border-top: rgba(160, 160, 160, 0.03) 0.1em solid;
+  border-bottom: rgba(0, 0, 0, 0.19) 0.1em solid;
+  background-color: rgba(140, 140, 140, 0.05);
 }
 .vinyl {
   margin: -2em 0 -2em 0;
   border-radius: 50%;
-  background-color: #28282891;
   padding: 0.7em;
-  border: #0000000d 1px solid;
+  border: 1px solid rgba(0,0,0,0.23);
   animation: spinner-border 15s linear infinite;
   position: absolute;
   left: 3em;
   -webkit-mask-image: radial-gradient(.5em at 50% 50% , #00000000 99%, black 100%);
+  mask-image: radial-gradient(.5em at 50% 50% , #00000000 99%, black 100%);
+  background-color: #00000038;
+  filter: drop-shadow(0px 0px 60px rgba(30,30,30,0.3));
 }
 .trackInfo {
   position: absolute;
   left: 35%;
-  top: 3em;
+  top: 2.6em;
 }
 
 .control-buttons {
@@ -112,6 +119,10 @@ html, body {
   overflow: hidden;
   white-space: nowrap;
   margin-top: 1rem;
+  filter: drop-shadow(0px 4px 2px rgba(20,20,20,0.8));
+}
+.artist-info {
+  filter: drop-shadow(0px 4px 2px rgba(20,20,20,0.8));
 }
 .text-muted {
   margin-bottom: .6rem;
@@ -182,15 +193,17 @@ html, body {
 .rangeslider {
   margin: 20px 0 10px 0;
   position: relative;
-  background: #696969;
+  background: #69696905;
   -ms-touch-action: none;
   touch-action: none;
+  box-shadow: #00000042 0px 0px 2px 0px, #7373731c 0px 1px 1px 0px, inset 3px -1px 3px rgba(173, 173, 173, 0.13), inset 3px 0px 5px rgba(0, 0, 0, 0.38);
 }
-
+.rangeslider__fill {
+  box-shadow: #00000042 0px 0px 2px 0px, #7373731c 0px 1px 1px 0px, inset 0px 1px 2px rgba(173, 173, 173, 0.21), inset 0px -2px 2px rgba(0, 0, 0, 0.56);
+}
 .rangeslider,
 .rangeslider .rangeslider__fill {
   display: block;
-  /*box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);*/
 }
 .rangeslider:hover .rangeslider__handle, .rangeslider__handle:hover {
   background: #fff;

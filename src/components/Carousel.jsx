@@ -34,7 +34,7 @@ const Carousel = props => {
             <img src={album_image} className={`vinyl ${paused ? 'paused' : 'playing'}`} alt="..." crossOrigin='anonymous' />
             <div className='trackInfo col-6'>
               <p className='text-left mb-0'><b className='song-info'><a href={album_uri} target='_blank' rel='noopener noreferrer'>{track_name}</a></b></p>
-              <p className='text-muted text-left'>{playerState.track_window.current_track.artists.map((artist, i, arr) => <a href={artist.uri} key={artist.name} target='_blank' rel='noopener noreferrer' className='text-muted'>{arr.length - 1 === i ? artist.name : artist.name+','}</a>)}</p>
+              <p className='text-muted text-left artist-info'>{playerState.track_window.current_track.artists.map((artist, i, arr) => <a href={artist.uri} key={artist.name} target='_blank' rel='noopener noreferrer' className='text-muted'>{arr.length - 1 === i ? artist.name : artist.name+','}</a>)}</p>
               <div className='center-bar controls justify-content-center'>
                 <Slider type={'songtime'} songDuration={duration_ms} songPosition={position_ms} />
               </div>

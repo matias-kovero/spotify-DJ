@@ -1,7 +1,9 @@
 # Spotify DJ (Seamless Playback)
-Just an Spotify Web Player using **Web Playback SDK**. Audio Analysis done with **Spotify Web API**.
+Just an Spotify Web Player using **Web Playback SDK**.  
+Audio Analysis done with **Spotify Web API**.
 
 
-Live Demo found [here](https://spotify-dj.now.sh) __(You will need Spotify Premium)__
+Live Demo found [here](https://spotify-dj.now.sh)  
+Web SDK currently works only for **premiums users**. _(Spotify restrictions)_
 
-![Preview](preview.png "Spotify DJ Webview")
+[![Preview](preview.png)](https://spotify-dj.now.sh)
