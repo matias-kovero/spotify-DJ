@@ -1,10 +1,10 @@
 html, body {
-  background: #000;
+  background: #131313;
   height: 100%;
   overflow: hidden;
 }
 #root {
-  background-color: #0000008f;
+  background-color:rgba(109, 109, 109, 0.56);
 }
 .App, #root {
   text-align: center;

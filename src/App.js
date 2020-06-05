@@ -15,6 +15,43 @@ const colorThief = new ColorThief();
 const Cookie = new Cookies();
 //const { getColorFromURL, getColor } = require('color-thief-node');
 
+const updateBg = (nColor, root) => {
+  let regex = new RegExp(/^rgba\(([^,]+),([^,]+),([^,]+),([^,]+)\)$/);
+  let bg = root.style.backgroundColor;
+  if(!bg) bg = 'rgba(109,109,109,0.56)'; // Fallback
+  let oColor = regex.exec(bg);
+  oColor.shift();
+  oColor = oColor.map(color => parseInt(color));
+  let rDiff = parseInt(nColor[0]) - oColor[0]; //  50
+  let gDiff = parseInt(nColor[1]) - oColor[1]; // -60
+  let bDiff = parseInt(nColor[2]) - oColor[2]; // -20
+  let opr = {
+    r: Math.sign(rDiff) !== 1 ? false : true,
+    g: Math.sign(gDiff) !== 1 ? false : true,
+    b: Math.sign(bDiff) !== 1 ? false : true,
+    rMax: Math.abs(rDiff),
+    gMax: Math.abs(gDiff),
+    bMax: Math.abs(bDiff)
+  };
+  let counter = Math.max(opr.rMax, opr.gMax, opr.bMax) + 1;
+  for(let i = 1; i < counter; i++) {
+    setTimeout(() => {
+      let rCurr = opr.r ? oColor[0] + i : oColor[0] - i;
+      let gCurr = opr.g ? oColor[1] + i : oColor[1] - i;
+      let bCurr = opr.b ? oColor[2] + i : oColor[2] - i;
+      if(i > opr.rMax) rCurr = opr.r ? oColor[0] + opr.rMax : oColor[0] - opr.rMax;
+      if(i > opr.gMax) gCurr = opr.g ? oColor[1] + opr.gMax : oColor[1] - opr.gMax;
+      if(i > opr.bMax) bCurr = opr.b ? oColor[2] + opr.bMax : oColor[2] - opr.bMax;
+      root.style.backgroundColor = `rgba(${rCurr},${gCurr},${bCurr},0.3)`;
+    }, i* 25);
+  }
+  // Every loop go x closer to the end value
+  // 100, 100, 100 -> 150, 50, 80
+  // 110, 90, 90
+  // 120, 80, 80
+
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -99,9 +136,9 @@ class App extends Component {
       let album_cover = document.getElementsByClassName('songPlayer')[0];
       if(album_cover) {
         let dc = colorThief.getColor(album_cover.querySelector('img'));
-        root.style.backgroundColor = `rgba(${dc[0]},${dc[1]},${dc[2]}, 0.3)`;
+        updateBg(dc, root);
       }
-    }, 200);
+    }, 300);
   }
 
   render(){
