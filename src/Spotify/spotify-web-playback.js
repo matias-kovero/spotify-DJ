@@ -146,7 +146,7 @@ class WebPlayback extends Component {
 
   render = () => {
     let result = (
-      <div className='h-100'>
+      <div className='d-flex-row'>
         {this.state.error && this.getScreenByTypeName("Error")}
         {!this.state.loaded && this.getScreenByTypeName("Loading")}
         {this.state.loaded && !this.state.selected && this.getScreenByTypeName("WaitingForDevice")}

@@ -4,6 +4,7 @@ import './App.css';
 import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 
 import Playlist from './components/Playlist';
+import MusicInfo from './components/MusicInfo';
 // Add Spotify Web Playback for React
 import {
   WebPlaybackScreen as Screen,
@@ -11,46 +12,10 @@ import {
 } from './Spotify/spotify-web-playback.js';
 import Carousel from './components/Carousel';
 import Login from './components/Login';
+import TrackInfo from './components/TrackInfo';
 const colorThief = new ColorThief();
 const Cookie = new Cookies();
 //const { getColorFromURL, getColor } = require('color-thief-node');
-
-const updateBg = (nColor, root) => {
-  let regex = new RegExp(/^rgba\(([^,]+),([^,]+),([^,]+),([^,]+)\)$/);
-  let bg = root.style.backgroundColor;
-  if(!bg) bg = 'rgba(109,109,109,0.56)'; // Fallback
-  let oColor = regex.exec(bg);
-  oColor.shift();
-  oColor = oColor.map(color => parseInt(color));
-  let rDiff = parseInt(nColor[0]) - oColor[0]; //  50
-  let gDiff = parseInt(nColor[1]) - oColor[1]; // -60
-  let bDiff = parseInt(nColor[2]) - oColor[2]; // -20
-  let opr = {
-    r: Math.sign(rDiff) !== 1 ? false : true,
-    g: Math.sign(gDiff) !== 1 ? false : true,
-    b: Math.sign(bDiff) !== 1 ? false : true,
-    rMax: Math.abs(rDiff),
-    gMax: Math.abs(gDiff),
-    bMax: Math.abs(bDiff)
-  };
-  let counter = Math.max(opr.rMax, opr.gMax, opr.bMax) + 1;
-  for(let i = 1; i < counter; i++) {
-    setTimeout(() => {
-      let rCurr = opr.r ? oColor[0] + i : oColor[0] - i;
-      let gCurr = opr.g ? oColor[1] + i : oColor[1] - i;
-      let bCurr = opr.b ? oColor[2] + i : oColor[2] - i;
-      if(i > opr.rMax) rCurr = opr.r ? oColor[0] + opr.rMax : oColor[0] - opr.rMax;
-      if(i > opr.gMax) gCurr = opr.g ? oColor[1] + opr.gMax : oColor[1] - opr.gMax;
-      if(i > opr.bMax) bCurr = opr.b ? oColor[2] + opr.bMax : oColor[2] - opr.bMax;
-      root.style.backgroundColor = `rgba(${rCurr},${gCurr},${bCurr},0.3)`;
-    }, i* 25);
-  }
-  // Every loop go x closer to the end value
-  // 100, 100, 100 -> 150, 50, 80
-  // 110, 90, 90
-  // 120, 80, 80
-
-}
 
 class App extends Component {
   constructor(props) {
@@ -135,8 +100,12 @@ class App extends Component {
       let root = document.getElementById('root');
       let album_cover = document.getElementsByClassName('songPlayer')[0];
       if(album_cover) {
-        let dc = colorThief.getColor(album_cover.querySelector('img'));
-        updateBg(dc, root);
+        let img = album_cover.querySelector('img');
+        if (!img || img.width === 0 ) return;
+        let dc = colorThief.getColor(img);
+        root.style.transition = "background-color 5.5s cubic-bezier(0.39, 0.58, 0.57, 1) 0s";
+        if (!dc) return;
+        root.style.backgroundColor = `rgba(${dc[0]},${dc[1]},${dc[2]}, 0.3)`;
       }
     }, 300);
   }
@@ -156,6 +125,7 @@ class App extends Component {
             onPlayerReady={(data) => {
               console.log("player ready", data);
               this.selectSpotifyDJ(data.device_id);
+              this.updatePlayerState();
             }}
             onPlayerStateChange={(playerState) => {
               this.setState({ playerState: playerState });
@@ -171,6 +141,7 @@ class App extends Component {
             </Screen>
 
             <Screen WaitingForDevice>
+              <div className="row justify-content-center">
               <div className='fixed-top'>
                 <h1 className='title'>Spotify DJ</h1>
                 {this.state.playerState && <h3 className='playlist-title'>{this.state.playerState.context.metadata.context_description}</h3>}
@@ -178,15 +149,30 @@ class App extends Component {
                 <h2>Loading...</h2>
                 <small className='text-muted'>Waiting for Device to be Selected</small>
               </div>
+              </div>
             </Screen>
 
             <Screen Player>
-              <div className='fixed-top'>
-                <h1 className='title'>Spotify DJ</h1>
-                {this.state.playerState && <h3 className='playlist-title'>{this.state.playerState.context.metadata.context_description}</h3>}
-                <p className='author text-muted'>by Matias Kovero</p>
+              <div className="row justify-content-center">
+                <div className='sticky-top mb-5'>
+                  <h1 className='title'>Spotify DJ</h1>
+                  {this.state.playerState && <h3 className='playlist-title'>{this.state.playerState.context.metadata.context_description}</h3>}
+                  <p className='author text-muted'>by Matias Kovero</p>
+                </div>
               </div>
-              {this.state.playerState && <Carousel playerState={this.state.playerState} />}
+              <div className="row justify-content-center pb-4">
+                {this.state.playerState && <Carousel playerState={this.state.playerState} />}
+              </div>
+              <div className="row justify-content-center pb-4">
+                {false && this.state.playerState && <TrackInfo track_id={this.state.playerState.track_window.current_track.id} token={this.state.userAccessToken} />}
+              </div>
+              <div className="row justify-content-center">
+                {this.state.playerState && <MusicInfo 
+                  token={this.state.userAccessToken} 
+                  track_id={this.state.playerState.track_window.current_track.id}
+                  playerState={this.state.playerState}
+                />}
+              </div>
             </Screen>
           </WebPlayback> }
           {this.state.playerState && <Playlist update={this.updatePlayerState} playerState={this.state.playerState} token={this.state.userAccessToken} volume={this.state.volume}/>}
