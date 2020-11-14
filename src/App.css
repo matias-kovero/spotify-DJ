@@ -115,7 +115,17 @@ html, body {
   background: rgba(50, 50, 50, 0.2);
   border-radius: 5px;
 }
-
+.close {
+  color: #000 !important;
+  text-shadow: 0 1px 0 #000 !important;
+}
+.toast-header {
+  color: #fff !important;
+  background-color: #585858 !important;
+}
+.toast {
+  background-color: #ffffff24 !important;
+}
 .control-buttons {
   display: flow-root;
   position: relative;
@@ -181,7 +191,7 @@ html, body {
 
 /* Edit buttons color on hover */
 .btn:focus {
-  box-shadow: none;
+  box-shadow: none !important;
 }
 .btn i{
   color: #d3d3d3;

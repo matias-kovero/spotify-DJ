@@ -7,6 +7,7 @@ import './App.css';
 import AuthContext  from './SpotifyContext/SpotifyContext';
 import { Header, Player, PlayerSkeleton } from './Player';
 import Button from 'react-bootstrap/Button';
+import Toast from './Player/components/Toast';
 import Container from 'react-bootstrap/Container';
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
 
   const [ player, updatePlayer ] = useState(null);
   const [ error, setError ] = useState(null);
+  const [ show, setShow ] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,9 +27,16 @@ const App = () => {
   return (player || context.auth_token) ? (
     <Container>
       <Header player={player} />
+      <Toast 
+        show={show} 
+        delay={5000} 
+        title={'Error'} 
+        text={error}
+        onClose={() => setShow(false)} 
+      />
       <WebPlayback
-        playerName="Testing Player"
-        playerInitialVolume={1}
+        playerName="Spotify DJ"
+        playerInitialVolume={0.5}
         playerAutoConnect={true}
         getAccessToken={context.getToken}
         onPlayerReady={(data) => {
@@ -40,8 +49,13 @@ const App = () => {
           updatePlayer(playerState);
         }}
         setError={(message) => {
-          console.log('WebPlayback Error:', message);
+          // Quick fix to inform users they have incompatible device.
+          if (message === 'Failed to initialize player') { 
+            message += "\r\nThis device isn't supported, sorry."
+          }
+          //console.log('WebPlayback Error:', message);
           setError(message);
+          setShow(true);
         }}
       >
         <Screen Error>
