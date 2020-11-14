@@ -12,7 +12,7 @@ import Toast from 'react-bootstrap/Toast';
  */
 export default function ToastElement({ show, onClose, delay, title, text }) {
   return (
-    <div style={{ position: 'absolute', top: '1em', right: '1em'}}>
+    <div style={{ position: 'absolute', top: '1em', right: '1em', zIndex: '1030'}}>
       <Toast onClose={onClose} show={show} delay={delay} autohide>
         <Toast.Header>
           <strong className="mr-auto">{title}</strong>
