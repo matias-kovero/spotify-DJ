@@ -31,7 +31,7 @@ const redirectToAuth = async (client, verifier) => {
     state: 'KIJ03NMF3',
     scope: SCOPES.join('%20'),
   };
-
+  console.log(`${endpoint}?${qs.stringify(params)}`);
   return `${endpoint}?${qs.stringify(params)}`;
 }
 
@@ -159,7 +159,7 @@ class AuthProvider extends Component {
 
   authorizeUser = async () => {
     // User came back, refresh tokens with cookies
-    if (!this.state.code) return this.getToken();
+    if (!this.state.verifier) return this.getToken();
     // User is logging in for the 1st time
     window.location.href = await redirectToAuth(this.state.client, this.state.verifier);
   }
