@@ -24,8 +24,9 @@ class WebPlaybackWaitingForDevice extends Component {
     window.Spotify.PlayerInstance = new window.Spotify.Player({
       name: this.props.playerName,
       volume: this.props.playerInitialVolume,
-      getOAuthToken: callback => {
-        callback(this.props.userAccessToken);
+      getOAuthToken: async (callback) => {
+        let token = await this.props.getAccessToken();
+        callback(token);
       }
     });
 
@@ -71,6 +72,7 @@ class WebPlaybackScreen extends Component {
     return this.props.children;
   }
 }
+
 
 class WebPlayback extends Component {
   interval = null
@@ -130,8 +132,13 @@ class WebPlayback extends Component {
             </WebPlaybackWaitingForDevice>
           );
         case 'Player':
+          return (
+           <WebPlaybackScreen Player {...this.props}>
+             {child}
+           </WebPlaybackScreen> 
+          )
           // TODO: Send state as a props for better developer UX
-          return child;
+          //return child;
         default:
           throw new Error(`Unrecognised WebPlayback.Screen type - ${child_type}`);
       }
@@ -146,12 +153,12 @@ class WebPlayback extends Component {
 
   render = () => {
     let result = (
-      <div className='d-flex-row'>
+      <>
         {this.state.error && this.getScreenByTypeName("Error")}
         {!this.state.loaded && this.getScreenByTypeName("Loading")}
         {this.state.loaded && !this.state.selected && this.getScreenByTypeName("WaitingForDevice")}
         {this.state.loaded && this.state.selected && this.getScreenByTypeName("Player")}
-      </div>
+      </>
     );
 
     return result;

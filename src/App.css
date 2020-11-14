@@ -1,6 +1,7 @@
 html, body {
-  background: #131313;
+  background-color: #131313!important;
   overflow-x: hidden;
+  height: 100%;
 }
 #root {
   background-color:rgba(109, 109, 109, 0.56);
@@ -8,7 +9,8 @@ html, body {
 .App, #root {
   text-align: center;
   color: #FFF;
-  height: 100vh;
+  min-height: -webkit-fill-available;
+  height: min-content;
 }
 .App-link {
   color: #61dafb;
@@ -95,12 +97,15 @@ html, body {
   background: linear-gradient(rgb(70 70 70 / 50%) 0%, rgb(0 0 0/ 0%) 30%,rgb(4 4 4 / 2%) 74%,rgb(10 10 10 / 34%) 90%, rgb(5 5 5 / 70%) 100%), linear-gradient(90deg, rgb(56 56 56 / 30%) 0%, rgb(0 0 0 / 0%) 30%, transparent);
 }
 .trackInfo {
-  position: absolute;
-  left: 35%;
-  top: 2.6em;
+  padding-top: 2.6em;
+  padding-left: 2em;
 }
 .light-text {
   color: #8e8e8e38 !important;
+}
+
+.track-features {
+  padding-top: 2em;
 }
 ::-webkit-scrollbar {
   width: 2px;
@@ -138,6 +143,8 @@ html, body {
   border-radius: 1.0em;
   box-shadow: inset 0px -4px 9px 0px rgb(134 134 134 / 3%), inset 0px 4px 11px 4px rgb(0 0 0 / 19%);
   background-color: rgb(25 25 25 / 3%);
+  margin-left: 0!important;
+  margin-right: 0!important;
 }
 
 .suggestion-image {
@@ -157,7 +164,25 @@ html, body {
   align-items: center;
 }
 
+.queue-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.queue-item {
+  border-radius: 1.5em;
+}
+
+.queue-img {
+  height: 64px;
+  border-radius: 15px;
+  filter: opacity(0.8) blur(0.2px);
+}
+
 /* Edit buttons color on hover */
+.btn:focus {
+  box-shadow: none;
+}
 .btn i{
   color: #d3d3d3;
   cursor: pointer;
