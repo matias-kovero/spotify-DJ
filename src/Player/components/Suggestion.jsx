@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 /**
  * 
@@ -40,7 +41,7 @@ const Suggestion = ({ data, queue, onAdd }) => {
           <div className="col-auto p-0" style={{marginLeft: '-1px'}}>
             <img className="suggestion-image" src={smallest_img.url || ''} alt=""/>
           </div>
-          <div className="track-info col">
+          <Col className="track-info ellipsis-one-line">
             <p className='text-left mb-0' style={{position: 'relative', top: '0.2em'}}>
               <b className='song-info'>
                 <a href={track.uri} target='_blank' rel='noopener noreferrer'>{track.name}</a>
@@ -53,7 +54,7 @@ const Suggestion = ({ data, queue, onAdd }) => {
                 </a>
               )}
             </p>
-          </div>
+          </Col>
           <div className="additional-info col-3">
             <div className="track-buttons">
               <div className='btn fa-1x'>

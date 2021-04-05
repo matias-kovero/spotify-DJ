@@ -5,10 +5,17 @@ import Col from 'react-bootstrap/Col';
 
 import Slider   from '../components/Slider';
 import Controls from '../components/Controls';
+import Image    from '../components/ImageTransition';
 
 const keys  = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const modes = ['Minor', 'Major'];
 
+/**
+ * 
+ * @param {Object} props
+ * @param {import('../spotify').PlayerState} props.playerState - Spotify Web Playbackstate 
+ * @param {import('../spotify').AudioFeatures} props.features - Current tracks audioFeatures
+ */
 export default function Player({ playerState, features }) {
   const track = useMemo(() => parseTrack(playerState), [playerState]);
 
@@ -16,20 +23,31 @@ export default function Player({ playerState, features }) {
   useEffect(function updateTitle() {
     window.document.title = `${track.name} · ${track.artists[0].name}`;
   });
-
   return (
     <Container>
       <div className="songPlayer">
         <Col className="p-0" style={{ height: 'inherit' }}>
           <div className="image-container">
-            <img src={track.album.images[0].url} className="vinyl" alt="" crossOrigin="anonymous" />
+            <Image current={track} />
             <div className="image-shadow" />
           </div>
         </Col>
         <Col xs={6}>
           <div className="trackInfo">
-            <p className='text-left mb-0'><b className='song-info'><a href={track.album.uri} target='_blank' rel='noopener noreferrer'>{track.name}</a></b></p>
-            <p className='text-muted text-left artist-info'>{track.artists.map((artist, i, arr) => <a href={artist.uri} key={artist.name} target='_blank' rel='noopener noreferrer' className='text-muted'>{arr.length - 1 === i ? artist.name : `${artist.name},`}</a>)}</p>
+            <div className="track-text-info ellipsis-one-line">
+              <div className="track-name ellipsis-one-line">
+                <span draggable="true">
+                  <a href={track.album.uri} target='_blank' rel='noopener noreferrer' className="bolder-text">{track.name}</a>
+                </span>
+              </div>
+              <div className="artist-names ellipsis-one-line">
+                {track.artists.map((artist, i, arr) => 
+                  <span key={i} draggable="true">
+                    <a href={artist.uri} target='_blank' rel='noopener noreferrer' className='text-muted'>{i === 0 ? artist.name : `, ${artist.name}`}</a>
+                  </span>
+                )}
+              </div>
+            </div>
             <div className='center-bar controls justify-content-center'>
               <Slider type={'songtime'} duration={track.duration_ms} position={playerState.position} />
             </div>
@@ -37,11 +55,23 @@ export default function Player({ playerState, features }) {
           </div>
         </Col>
         <Col xs={4}>
-          <div className="track-features">
-            <p className="text-left">BPM: {Math.round(features.tempo)} <small> ({features.time_signature}/4)</small></p> 
-            <p className="text-left">Key: {keys[features.key]} <small> ({modes[features.mode]})</small></p>
-            <p className="text-left">Dance: {Math.round(features.danceability*100)}</p>
-            <p className="text-left">Energy: {Math.round(features.energy*100)}</p>
+          <div className="track-features text-muted">
+            <div style={{ display:'flex', gap: '1em'}}>
+              <div>
+                <span role="img" aria-label="BPM">🎚</span> {Math.round(features.tempo)} <small>({features.time_signature}/4)</small>
+              </div>
+              <div>
+                <span role="img" aria-label="Key">🎹</span> {keys[features.key]} <small>({modes[features.mode]})</small>
+              </div>
+            </div>
+            <div style={{ display:'flex', gap: '1em'}}>
+              <div>
+                <span role="img" aria-label="Dance">🕺</span> {Math.round(features.danceability*100)} 
+              </div>
+              <div>
+                <span role="img" aria-label="Energy">⚡</span> {Math.round(features.energy*100)} 
+              </div>
+            </div>
           </div>
         </Col>
       </div>

@@ -71,6 +71,7 @@ const refreshAccessToken = async (client, code) => {
     return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
   }).join('&');
 
+  // This might return 400 - and app will stuck on infinite loop!!
   return await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -79,8 +80,6 @@ const refreshAccessToken = async (client, code) => {
     body: bodyString
   });
 }
-
-// https://www.taniarascia.com/using-context-api-in-react/
 
 class AuthProvider extends Component {
 
@@ -210,9 +209,13 @@ class AuthProvider extends Component {
     const endpoint = `https://api.spotify.com/v1/audio-analysis/${id}`;
 
     let analysis = await fetch(endpoint, { method: "GET", headers: headers });
-    // TODO: Check for 400 etc.
-    let json = await analysis.json();
-    return json;
+    // TODO: Aquire all valid codes.
+    if ([200].includes(analysis.status)) {
+      let json = await analysis.json();
+      return json;
+    } else {
+      throw Error(`${analysis.status} - ${analysis.statusText}`);
+    }
   }
 
   /**
@@ -252,7 +255,10 @@ class AuthProvider extends Component {
       setTimeout(() => {
         window.Spotify.PlayerInstance.resume();
       }, 2000);
-    } else console.log(`[ERROR] ${response.status} - ${response.statusText}`);
+    } else {
+      let json = await response.json();
+      throw Error(`${json.error.status} - ${json.error.message}`);//console.log(`[ERROR] ${response.status} - ${response.statusText}`);
+    }
   }
 
   render() {

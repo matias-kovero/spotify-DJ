@@ -1,12 +1,24 @@
-import React, { useMemo } from 'react'
-import Container from 'react-bootstrap/Container';
+import React, { useEffect, useMemo, useState } from 'react'
+
+import Container  from 'react-bootstrap/Container';
+import Col        from 'react-bootstrap/Col';
+import Analysis   from './Analysis';
+
+const TRY_COUNT_AFTER_ERROR = 3;
+const TRY_TIMEOUT_MS = 1000;
 
 /**
  * 
  * @param {Object} props
  * @param {import('../spotify').TrackObject[]} props.queue
+ * @param {import('../spotify').AudioAnalysis} props.analysis
+ * @param {import('../spotify').PlayerState} props.playerState
+ * @param {SpotifyContext} props.api - SpotifyContext
+ * @param {Function} props.error - SpotifyContext
  */
-const QueueContainer = ({ queue, next_tracks }) => {
+const QueueContainer = ({ queue, next_tracks, analysis, playerState, api, error }) => {
+  const [ nextAnalysis, updateAnalysis ] = useState(null);
+
   // 3AM function
   const track_queue = useMemo(() => {
     // if user has own queue, show them 1st, then next_tracks | Currently won't show next_tracks as it's overwritten by added songs.
@@ -18,9 +30,28 @@ const QueueContainer = ({ queue, next_tracks }) => {
     }
   }, [queue, next_tracks]);
 
+  // When our queue changes!
+  useEffect(() => {
+    if (!track_queue || !track_queue.length) return;
+    // If our 1st track in queue isn't our nextAnalysis object
+    if (!nextAnalysis || nextAnalysis.id !== track_queue[0].id) {
+      async function update(tries) {
+        try {
+          let t = await api.audioAnalysis(track_queue[0].id);
+          t.id = track_queue[0].id;
+          updateAnalysis(t);
+        } catch (err) {
+          error(`Issues while updating track data.\n ${err.message}`);
+          if (tries < TRY_COUNT_AFTER_ERROR) setTimeout(() => update(tries+1), TRY_TIMEOUT_MS);
+        }
+      }
+      update(0);
+    }
+  }, [ track_queue[0] ]);
+
   return (
-    <Container>
-      <div className="track-info-container">
+    <Container style={{ display: 'flex', gap: '2em'}}>
+      <Col className="track-info-container">
         <div className="queue-list">
           {track_queue ? track_queue.map((track, i) => {
             let smallest_img = track.album.images[track.album.images.length-1];
@@ -32,7 +63,8 @@ const QueueContainer = ({ queue, next_tracks }) => {
             )
           }): null}
         </div>
-      </div>
+      </Col>
+      { analysis.meta && nextAnalysis ? <Analysis playerState={playerState} analysis={analysis} next_track={nextAnalysis} /> : null }
     </Container>
   )
 }

@@ -5,7 +5,11 @@ import Suggestion from './Suggestion';
 
 const SuggestionContainer = ({ recom, queue, addQueue }) => {
 
-  const recoms = useMemo(() => recom.tracks, [recom]);
+  const recoms = useMemo(() => { 
+    if (recom.tracks) {
+      return recom.tracks.sort((a, b) => b.popularity - a.popularity);
+    } 
+  }, [recom]);
 
   useEffect(() => {
     // This should run only when recoms change?
@@ -18,7 +22,7 @@ const SuggestionContainer = ({ recom, queue, addQueue }) => {
           Suggested tracks. Tracks in queue {queue.length}
         </small>
         <div className="suggested-tracks-container">
-          {recoms ? recoms.slice(0, 10).map((rec, i) => {
+          {recoms ? recoms/*.slice(0, 10)*/.map((rec, i) => {
             return (
               <Suggestion key={i} data={rec} queue={queue} onAdd={addQueue} />
             )

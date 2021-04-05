@@ -5,10 +5,10 @@ import {
 } from './Spotify/spotify-web-playback.js';
 import './App.css';
 import AuthContext  from './SpotifyContext/SpotifyContext';
-import { Header, Player, PlayerSkeleton } from './Player';
-import Button from 'react-bootstrap/Button';
-import Toast from './Player/components/Toast';
-import Container from 'react-bootstrap/Container';
+import { Header, Player, Toast, PlayerSkeleton } from './Player';
+import { SideMenu } from './Menu';
+import Button     from 'react-bootstrap/Button';
+import Container  from 'react-bootstrap/Container';
 
 const App = () => {
   const context = useContext(AuthContext);
@@ -24,6 +24,12 @@ const App = () => {
     fetchData();
   }, [ error, context ]);
 
+  function createErrorPopup(message) {
+    console.log(`[ERROR] ${message}`)
+    setError(message);
+    setShow(true);
+  }
+
   return (player || context.auth_token) ? (
     <Container>
       <Header player={player} />
@@ -36,13 +42,17 @@ const App = () => {
       />
       <WebPlayback
         playerName="Spotify DJ"
-        playerInitialVolume={0.5}
+        playerInitialVolume={localStorageVolume()}
         playerAutoConnect={true}
         getAccessToken={context.getToken}
         onPlayerReady={(data) => {
           console.log(`[Player] Ready`);
           // Automatically select our player
-          context.selectDevice(data.device_id);
+          try {
+            context.selectDevice(data.device_id);
+          } catch (err) {
+            createErrorPopup(err);
+          }
         }}
         onPlayerStateChange={(playerState) => {
           // Update our players state!!
@@ -54,8 +64,7 @@ const App = () => {
             message += "\r\nThis device isn't supported, sorry."
           }
           //console.log('WebPlayback Error:', message);
-          setError(message);
-          setShow(true);
+          createErrorPopup(message);
         }}
       >
         <Screen Error>
@@ -71,7 +80,8 @@ const App = () => {
           />
         </Screen>
         <Screen Player>
-          <Player playerState={player} api={context} />
+          {/*<SideMenu />*/}
+          <Player playerState={player} api={context} error={createErrorPopup} />
         </Screen>
       </WebPlayback>
     </Container>
@@ -101,3 +111,21 @@ function ErrorMessage(context) {
 }
 
 export default App;
+
+/** HELPER FUNCTIONS */
+
+/**
+ * Checks users playback info from localStorage.
+ * If nothing is found, we create a playback object with default volume: 0.5
+ * @returns {Number} playback volume
+ */
+const localStorageVolume = () => {
+  // Check if user has playback object with volume key.
+  let playback = JSON.parse(localStorage.getItem('playback'));
+  if (playback && !isNaN(playback.volume)) return playback.volume;
+  else {
+    let settings = { volume: 0.5 };
+    localStorage.setItem('playback', JSON.stringify(settings));
+    return settings.volume;
+  }
+}

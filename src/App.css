@@ -100,10 +100,22 @@ html, body {
   padding-top: 2.6em;
   padding-left: 2em;
 }
+.track-name, .artist-names {
+  text-align: left;
+  filter: drop-shadow(0px 4px 2px rgba(20,20,20,0.8));
+}
+.ellipsis-one-line {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .light-text {
   color: #8e8e8e38 !important;
 }
-
+.bolder-text, .bolder-text:hover {
+  font-weight: bolder;
+  color: #FFF !important;
+}
 .track-features {
   padding-top: 2em;
 }
@@ -131,7 +143,33 @@ html, body {
   position: relative;
   vertical-align: middle;
 }
-.suggestions-container, .track-info-container {
+@keyframes indicator {
+  from {
+    background: rgb(255, 255, 255);
+  }
+  to {
+    background: rgba(255, 255, 255, 0);
+  }
+}
+@-webkit-keyframes indicator {
+  from {
+    background: rgb(255, 255, 255);
+  }
+  to {
+    background: rgba(255, 255, 255, 0);
+  }
+}
+.fade-indicator {
+  -webkit-animation: indicator 1s ease-in-out 0s;
+  -moz-animation: indicator 1s ease-in-out 0s;
+  -o-animation: indicator 1s ease-in-out 0s;
+  animation: indicator 0.5s 0s;
+}
+.fade-indicator-fast {
+  animation: indicator 0.2s 0s;
+}
+
+.suggestions-container, .track-info-container, .features-container {
   border-radius: 1.5em;
   box-shadow: 0px 1px 4px 0px rgba(0,0,0,.05), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.1), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.15), inset 0px 20px 20px 0px rgba(255, 255, 255, 0.01);
   border-top: rgba(160, 160, 160, 0.03) 0.1em solid;
@@ -139,7 +177,7 @@ html, body {
   background-color: rgba(140, 140, 140, 0.05);
   padding-left: 2.5em;
   padding-right: 2.5em;
-  padding-bottom: 2em;
+  padding-bottom: 1em;
   padding-top: 1em;
 }
 
@@ -253,6 +291,23 @@ html, body {
 .song-info a:hover {
   color: #FFF !important;
 }
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 100vh !important;
+  z-index: 1300;
+}
+.sidebar-wrapper {
+  min-height: 100vh !important;
+  width: 100vw;
+  margin-left: -1rem;
+  transition: margin .25s ease-out;
+}
+
+
 .slider {
   -webkit-appearance: none;
   width: 100%;

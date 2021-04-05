@@ -10,6 +10,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
     <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r75/three.min.js"></script>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -33,22 +35,47 @@
       if(event.keyCode === 32) { // Spacebar
         event.preventDefault();
         window.Spotify.PlayerInstance.togglePlay();
-      } else if(event.keyCode === 37 || event.keyCode === 177) { // Arrow Left
+      } else if([37, 177].includes(event.keyCode)) { // Arrow Left
         event.preventDefault();
-        window.Spotify.PlayerInstance.previousTrack();
-      } else if(event.keyCode === 39 || event.keyCode === 176) { // Arrow Right
+        window.Spotify.PlayerInstance.getCurrentState().then(state => {
+          // Current track is under 5 sec, user wants to go to previous track.
+          if (state.position < 5000) {
+            window.Spotify.PlayerInstance.previousTrack();
+          } else {
+            window.Spotify.PlayerInstance.seek(0);
+          }
+        })
+      } else if([39, 176].includes(event.keyCode)) { // Arrow Right
         event.preventDefault();
         window.Spotify.PlayerInstance.nextTrack();
-      } else if(event.keyCode === 38) {
-        window.Spotify.PlayerInstance.getVolume().then(volume => {
-          if(volume >= 1) return;
-          window.Spotify.PlayerInstance.setVolume(volume + 0.1);
-        });
-      } else if(event.keyCode === 40) {
-        window.Spotify.PlayerInstance.getVolume().then(volume => {
-          if(volume <= 0) return;
-          window.Spotify.PlayerInstance.setVolume(volume - 0.1);
-        });
+      } else if(event.keyCode === 38) { // Arrow Up
+        // Get old volume
+        let playback = JSON.parse(localStorage.getItem('playback'));
+        let newVol = Math.round((playback.volume + 0.05) * 100) / 100;
+
+        if (newVol <= 1) {
+          window.Spotify.PlayerInstance.setVolume(newVol);
+          playback.volume = newVol;
+          localStorage.setItem('playback', JSON.stringify(playback));
+        } else {
+          // User trying to go above max volume of 1.
+        }
+      } else if(event.keyCode === 40) { // Arrow Down
+        // Get old volume
+        let playback = JSON.parse(localStorage.getItem('playback'));
+        let newVol = Math.round((playback.volume - 0.05) * 100) / 100;
+        
+        if (newVol >= 0) {
+          window.Spotify.PlayerInstance.setVolume(newVol);
+          playback.volume = newVol;
+          localStorage.setItem('playback', JSON.stringify(playback));
+        } else if (playback.volume > 0) { // Volume might go below 0, force it to 0.
+          window.Spotify.PlayerInstance.setVolume(0);
+          playback.volume = 0;
+          localStorage.setItem('playback', JSON.stringify(playback));
+        } else {
+          // User trying to go below min volume of 0.
+        }
       }
     };
     </script>

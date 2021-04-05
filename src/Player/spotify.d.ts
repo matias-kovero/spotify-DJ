@@ -204,7 +204,97 @@ export declare interface TrackObject {
   uri: String
 }
 
-declare interface AudioAnalysis {
+declare interface PlayerState {
+  bitrate: Number,
+  context: {
+    metadata: { context_description: String }
+    uri: String
+  },
+  disallows: {
+    pausing: Boolean,
+    toggling_reapeat_context: Boolean,
+    toggling_repeat_track: Boolean,
+    toggling_shuffle: Boolean
+  }
+  /**
+   * Duration of current playback track in (ms).
+   */
+  duration: Number,
+  /**
+   * State of current playback.
+   */
+  paused: Boolean,
+  /**
+   * Position of current playback track in (ms).
+   */
+  position: Number,
+  repeat_mode: Number,
+  restrictions: {},
+  shuffle: Boolean,
+  timestamp: Number,
+  track_window: {
+    current_track: TrackObject,
+    next_tracks: TrackObject[],
+    previous_tracks: TrackObject[]
+  }
+}
+
+declare interface AudioAnalysisBar {
+  start: Number,
+  duration: Number,
+  confidence: Number
+}
+
+declare interface AudioAnalysisBeat {
+  start: Number,
+  duration: Number,
+  confidence: Number
+}
+
+declare interface AudioAnalysisMeta {
+  analysis_time: Number,
+  analyzer_version: String,
+  detailed_status: String,
+  input_process: String,
+  platform: String,
+  status_code: Number,
+  timestamp: Number
+}
+
+declare interface AudioAnalysisSection {
+  confidence: Number,
+  duration: Number,
+  key: Number,
+  key_confidence: Number,
+  loudness: Number,
+  mode: Number,
+  mode_confidence: Number
+  start: Number,
+  tempo: Number,
+  tempo_confidence: Number
+  time_signature: Number,
+  time_signature_confidence: Number
+}
+
+declare interface AudioAnalysisSegment {
+  confidence: Number,
+  duration: Number,
+  loudness_end: Number,
+  loudness_max: Number,
+  loudness_max_time: Number,
+  loudness_start: Number,
+  pitches: Number[],
+  start: Number,
+  timbre: Number[]
+}
+
+declare interface AudioAnalysisTatum {
+  start: Number,
+  duration: Number,
+  confidence: Number
+}
+
+declare interface AudioAnalysisTrack {
   duration: Number,
   sample_md5: String,
   offset_secons: Number,
@@ -231,7 +321,15 @@ declare interface AudioAnalysis {
   rhytmstring: String,
   rhythm_version: Number
 }
-
+declare interface AudioAnalysis {
+  bars: AudioAnalysisBar[],
+  beats: AudioAnalysisBeat[],
+  meta: AudioAnalysisMeta,
+  sections: AudioAnalysisSection[],
+  segments: AudioAnalysisSegment[],
+  tatums: AudioAnalysisTatum[],
+  track: AudioAnalysisTrack
+}
 declare interface AudioFeatures {
   duration_ms: String,
   key: Number,
