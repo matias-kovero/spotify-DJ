@@ -32,7 +32,7 @@ export default function Player({ playerState, features }) {
             <div className="image-shadow" />
           </div>
         </Col>
-        <Col xs={6}>
+        <Col xs={9}>
           <div className="trackInfo">
             <div className="track-text-info ellipsis-one-line">
               <div className="track-name ellipsis-one-line">

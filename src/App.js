@@ -98,7 +98,7 @@ function ErrorMessage(context) {
   return (context.code) ? (
     <PlayerSkeleton />
   ) : (
-    <div className="pt-4 text-center">
+    <div className="pt-4 text-center login-prompt">
       <p>You need to login to use this service</p>
       <Button 
         variant="success"
