@@ -55,7 +55,7 @@ export default function Player({ playerState, features }) {
           </div>
         </Col>
         <Col xs={4}>
-          <div className="track-features text-muted">
+          {/*<div className="track-features text-muted">
             <div style={{ display:'flex', gap: '1em'}}>
               <div>
                 <span role="img" aria-label="BPM">🎚</span> {Math.round(features.tempo)} <small>({features.time_signature}/4)</small>
@@ -72,7 +72,7 @@ export default function Player({ playerState, features }) {
                 <span role="img" aria-label="Energy">⚡</span> {Math.round(features.energy*100)} 
               </div>
             </div>
-          </div>
+          </div>*/}
         </Col>
       </div>
     </Container>

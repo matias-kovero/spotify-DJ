@@ -19,6 +19,8 @@ const TRY_TIMEOUT_MS = 1000;
 const QueueContainer = ({ queue, next_tracks, analysis, playerState, api, error }) => {
   const [ nextAnalysis, updateAnalysis ] = useState(null);
 
+const queue_title = "Seuraavaksi: "; //title for the queue
+
   // 3AM function
   const track_queue = useMemo(() => {
     // if user has own queue, show them 1st, then next_tracks | Currently won't show next_tracks as it's overwritten by added songs.
@@ -52,16 +54,23 @@ const QueueContainer = ({ queue, next_tracks, analysis, playerState, api, error 
   return (
     <Container style={{ display: 'flex', gap: '2em'}}>
       <Col className="track-info-container">
-        <div className="queue-list">
-          {track_queue ? track_queue.map((track, i) => {
-            let smallest_img = track.album.images[track.album.images.length-1];
-            return (
-              <div className="queue-item p-2" key={i}>
-                <img className="queue-img" alt="album-img" src={smallest_img.url}></img>
-                <div className="queue-img-shadow"></div>
-              </div>
-            )
-          }): null}
+        <div className="queue-list-container">
+          <h3 className="queue-title">{queue_title}</h3>
+          <div className="queue-list">
+            {track_queue ? track_queue.map((track, i) => {
+              let smallest_img = track.album.images[track.album.images.length-1];
+              let track_name = track.name; //get track name
+              let track_artist = track.artists[0].name; //get artist name
+              return (
+                <div className="queue-item p-2" key={i}>
+                  <img className="queue-img" alt="album-img" src={smallest_img.url}></img>
+                  <div className="queue-img-shadow"></div>
+                  <span className="queue-track-name">{track_name}</span> {/*show track name*/}
+                  <p className="queue-artist-name">{track_artist}</p> {/*show artist name*/}
+                </div>
+              )
+            }): null}
+          </div>
         </div>
       </Col>
       { analysis.meta && nextAnalysis ? <Analysis playerState={playerState} analysis={analysis} next_track={nextAnalysis} /> : null }

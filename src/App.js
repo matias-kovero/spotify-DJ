@@ -41,7 +41,7 @@ const App = () => {
         onClose={() => setShow(false)} 
       />
       <WebPlayback
-        playerName="Spotify DJ"
+        playerName="Spotisaab"
         playerInitialVolume={localStorageVolume()}
         playerAutoConnect={true}
         getAccessToken={context.getToken}
@@ -76,7 +76,7 @@ const App = () => {
         <Screen WaitingForDevice>
           <PlayerSkeleton 
             text="Waiting for device to be selected" 
-            info={"If you are stuck here, open spotify and from devices select Spotify DJ."} 
+            info={"If you are stuck here, open spotify and from devices select Spotisaab."} 
           />
         </Screen>
         <Screen Player>

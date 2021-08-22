@@ -1,10 +1,10 @@
 html, body {
-  background-color: #131313!important;
+  background-color: #171717!important;
   overflow-x: hidden;
   height: 100%;
 }
 #root {
-  background-color:rgba(109, 109, 109, 0.56);
+  background-color:#171717;
 }
 .App, #root {
   text-align: center;
@@ -55,7 +55,7 @@ html, body {
   box-shadow: 0px 1px 4px 0px rgba(0,0,0,.05), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.1), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.15), inset 0px 20px 20px 0px rgba(255, 255, 255, 0.01);
   border-top: rgba(160, 160, 160, 0.03) 0.1em solid;
   border-bottom: rgba(0, 0, 0, 0.19) 0.1em solid;
-  background-color: rgba(140, 140, 140, 0.05);
+  background-color: #000;
 }
 .vinyl-old {
   margin: -2em 0 -2em 0;
@@ -67,7 +67,7 @@ html, body {
   left: 3em;
   -webkit-mask-image: radial-gradient(.5em at 50% 50% , #00000000 99%, black 100%);
   mask-image: radial-gradient(.5em at 50% 50% , #00000000 99%, black 100%);
-  background-color: #00000038;
+  background-color: #000;
   filter: drop-shadow(0px 0px 60px rgba(30,30,30,0.3));
   filter: opacity(0.2);
   border-top-left-radius: 1.5em;
@@ -99,6 +99,7 @@ html, body {
 .trackInfo {
   padding-top: 2.6em;
   padding-left: 2em;
+  text-align: left;
 }
 .track-name, .artist-names {
   text-align: left;
@@ -174,7 +175,7 @@ html, body {
   box-shadow: 0px 1px 4px 0px rgba(0,0,0,.05), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.1), inset 0px -20px 20px 0px rgba(0, 0, 0, 0.15), inset 0px 20px 20px 0px rgba(255, 255, 255, 0.01);
   border-top: rgba(160, 160, 160, 0.03) 0.1em solid;
   border-bottom: rgba(0, 0, 0, 0.19) 0.1em solid;
-  background-color: rgba(140, 140, 140, 0.05);
+  background-color: #000;
   padding-left: 2.5em;
   padding-right: 2.5em;
   padding-bottom: 1em;
@@ -240,12 +241,12 @@ html, body {
 }
 /* End button edit on hover */
 .playlist {
-  background-color: #28282891;
+  background-color: #000;
   border-radius: 10px;
   margin-bottom: 7rem;
 }
 .player {
-  background-color: #28282891;
+  background-color: #000;
   max-height: 7.5rem;
   opacity: 0.94;
 }
@@ -456,4 +457,14 @@ html, body {
 }
 .rangeslider__labels .rangeslider__label-item {
   display: none;
+}
+
+/* SPOTISAAB STYLES */
+
+.queue-list-container {
+  text-align: start;
+}
+
+.features-container {
+  display:none;
 }

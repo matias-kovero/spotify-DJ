@@ -37,9 +37,11 @@ export default function AnalysisContainer({ playerState, analysis, next_track })
 
   return (
     <Col className="features-container">
+      {/*
       <p className="text-muted"><small>This track has {analysis.sections.length} sections. Currently on section {currentSection(analysis.sections, playerState.position)}.</small></p>
       <p className="text-muted"><small>Fade-out at: {secToMin(analysis.sections[analysis.sections.length-1].start)} and next track starts at {secToMin(next_track.sections[1].start)}</small></p>
       <p className="text-muted"><small>Beats<Indicator value={currentBeat(analysis.beats, playerState.position)} fast />  Bars<Indicator value={currentBar(analysis.bars, playerState.position)} /></small></p>
+    */}
     </Col>
   )
 }

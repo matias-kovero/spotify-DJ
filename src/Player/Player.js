@@ -99,9 +99,9 @@ const PlayerContainer = ({ playerState, api, error }) => {
         <div className="row justify-content-center pb-4">
           <TrackInfo features={features} />
         </div>*/}
-        <Row className="pb-4">
+        {/*<Row className="pb-4">
           <Suggestions recom={recom} queue={localQueue} addQueue={addQueue} />
-        </Row>
+      </Row>*/}
       </>
     )
   }
@@ -144,9 +144,9 @@ export const PlayerSkeleton = ({text, info}) => {
 // When our track changes, fire this function
 export const changeBackgroundColor = () => {
   function setBg(root, dc, alpha) {
-    root.style.transition = "background-color 5.5s cubic-bezier(0.39, 0.58, 0.57, 1) 0s";
+    
     if (!dc) return;
-    root.style.backgroundColor = `rgba(${dc[0]},${dc[1]},${dc[2]}, ${alpha})`;
+    root.style.backgroundColor = `#171717`;
     /**
      * Radial gradient does not support fading yet.
      * So we are sticking to plain old background.
