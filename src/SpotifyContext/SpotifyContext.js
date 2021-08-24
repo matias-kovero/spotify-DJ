@@ -25,7 +25,7 @@ const redirectToAuth = async (client, verifier) => {
   const params = { 
     client_id: client, // Provide this as param
     response_type: 'code',
-    redirect_uri: `http://${window.location.host}/callback`,
+    redirect_uri: `https://${window.location.host}/callback`,
     code_challenge_method: 'S256',
     code_challenge: code,
     state: 'KIJ03NMF3',
